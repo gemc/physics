@@ -3,7 +3,7 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(B4a)
+project(pim_absorbtion)
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -43,10 +43,9 @@ target_link_libraries(pim_absorbtion ${Geant4_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(FILES_TO_COPY
-  run1.mac
-  run2.mac
+  run.mac
   init_vis.mac
-  gui.mac
+  vis.mac
   )
 
 foreach(_script ${FILES_TO_COPY})

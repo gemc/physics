@@ -91,13 +91,10 @@ int main(int argc,char** argv)
 		// interactive mode : define UI session
 		// assuming the existance of init_vis and gui
 		UImanager->ApplyCommand("/control/execute init_vis.mac");
-		if (ui->IsGUI()) {
-			UImanager->ApplyCommand("/control/execute gui.mac");
-		}
 		ui->SessionStart();
 		delete ui;
 	}
-		
+	
 	delete visManager;
 	delete runManager;
 }
