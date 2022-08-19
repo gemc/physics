@@ -1,20 +1,18 @@
+#include "PhysicsList.hh"
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
 
+// geant4 physics
 #include "G4PhysListFactory.hh"
 #include "QGSP_BERT_HP.hh"
 
-
+// geant4
 #include "G4MTRunManager.hh"
 #include "G4UIExecutive.hh"
-
-
-
 #include "G4UImanager.hh"
 #include "G4UIcommand.hh"
 #include "G4StepLimiterPhysics.hh"
 #include "Randomize.hh"
-#include "PhysicsList.hh"
 #include "G4VisExecutive.hh"
 #include "G4ChargeExchangePhysics.hh"
 

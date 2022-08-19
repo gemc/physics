@@ -1,6 +1,6 @@
 /run/initialize
 #
 # Run Default kinemtics, print every 100 events
-/run/printProgress 100
-/run/beamOn 10000
+/run/printProgress 20
+/run/beamOn 120
 

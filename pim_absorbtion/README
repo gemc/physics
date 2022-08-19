@@ -22,20 +22,13 @@ The test counts the various neutrinos.
 
 ** Geometry
 
-
-./pim_abs.pl config.dat
-
-
-** Run macro
-
-
-
-
+A G4_Galactive tube encompass a beam dump made of aluminum.
+In the stepping action the ntuple is filled when the step is in the scoring  tube.
 
 
 ** Run macro:
 
-root test.C
+root neutrinos_histo.C
 
 
 

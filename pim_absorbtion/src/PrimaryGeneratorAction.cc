@@ -8,8 +8,7 @@
 
 PrimaryGeneratorAction::PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),
-fParticleGun(0), 
-fEnvelopeBox(0)
+fParticleGun(0)
 {
 	G4int n_particle = 1;
 	
@@ -37,7 +36,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 	G4double y0 = 0*mm/2.;
 	G4double z0 = -201.*cm;
 	
-	fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+	fParticleGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
 	
 	fParticleGun->GeneratePrimaryVertex(anEvent);
 }

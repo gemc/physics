@@ -2,16 +2,10 @@
 #define SteppingAction_h 1
 
 #include "G4UserSteppingAction.hh"
-#include "globals.hh"
 
 class DetectorConstruction;
 class EventAction;
 
-/// Stepping action class.
-///
-/// In UserSteppingAction() there are collected the energy deposit and track 
-/// lengths of charged particles in Absober and Gap layers and
-/// updated in EventAction.
 class G4LogicalVolume;
 
 class SteppingAction : public G4UserSteppingAction

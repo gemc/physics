@@ -1,11 +1,8 @@
 #ifndef RunAction_h
 #define RunAction_h 1
 
+// geant4
 #include "G4UserRunAction.hh"
-#include "globals.hh"
-
-class G4Run;
-
 
 class RunAction : public G4UserRunAction
 {

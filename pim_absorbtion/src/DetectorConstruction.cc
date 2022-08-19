@@ -47,15 +47,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 	G4Material* vacuumMaterial   = nist->FindOrBuildMaterial("G4_Galactic");
 	G4Material* aluminumMaterial = nist->FindOrBuildMaterial("G4_Al");
 	
-	G4Tubs* vacuumDetectorSolid =
-	new G4Tubs ("vacuumDetectorSolid",                             // name
-					0*cm, 60*cm, 210*cm, 0*deg, 360*deg);         // size
+	G4Tubs* vacuumDetectorSolid = new G4Tubs ("vacuumDetectorSolid",   // name
+					0*cm, 60*cm, 210*cm, 0*deg, 360*deg);                  // size
 	
 	G4LogicalVolume* vacuumDetectorLogical  =
 	new G4LogicalVolume(vacuumDetectorSolid,           // solid
 							  vacuumMaterial,                // material
 							  "vacuumDetectorLogical");      // name
 	
+	fScoringVolume = vacuumDetectorLogical;
 
 	new G4PVPlacement(0,                       // no rotation
 							G4ThreeVector(),         // at (0,0,0)
@@ -80,12 +80,11 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 							G4ThreeVector(),        // at (0,0,0)
 							beamDumpLogical,        // logical volume
 							"beamDump",             // name
-							logicWorld,             // mother  volume
+							vacuumDetectorLogical,  // mother volume
 							false,                  // no boolean operation
 							0,                      // copy number
 							true);                  // overlaps checking
 	
-	fScoringVolume = vacuumDetectorLogical;
 
 	return physWorld;
 }

@@ -25,33 +25,14 @@ RunAction::RunAction() : G4UserRunAction()
 	
 	// Book histograms, ntuple
 	analysisManager->CreateNtuple("pima", "pim absorbtion test");
-	analysisManager->CreateNtupleDColumn("PDGE");
-	analysisManager->CreateNtupleDColumn("KE");
+	analysisManager->CreateNtupleDColumn("pid");
+	analysisManager->CreateNtupleDColumn("kine");
+	analysisManager->CreateNtupleDColumn("evn");
 	analysisManager->FinishNtuple();
-	
-	/*  analysisManager->CreateNtupleSColumn("proc");
-	 analysisManager->CreateNtupleDColumn("M");
-	 analysisManager->CreateNtupleDColumn("Lgap");
-	 analysisManager->CreateNtupleDColumn("Egamma");
-	 analysisManager->CreateNtupleDColumn("x");
-	 analysisManager->CreateNtupleDColumn("y");
-	 analysisManager->CreateNtupleDColumn("z");
-	 analysisManager->CreateNtupleDColumn("px");
-	 analysisManager->CreateNtupleDColumn("py");
-	 analysisManager->CreateNtupleDColumn("pz");
-	 analysisManager->CreateNtupleDColumn("pdir_x");
-	 analysisManager->CreateNtupleDColumn("pdir_y");
-	 analysisManager->CreateNtupleDColumn("pdir_z");
-	 analysisManager->CreateNtupleSColumn("pids");
-	 analysisManager->CreateNtupleDColumn("pdgencode");
-	 analysisManager->CreateNtupleDColumn("inTarget");
-	 analysisManager->FinishNtuple();*/
-	
+		
 }
 
-
-RunAction::~RunAction()
-{
+RunAction::~RunAction() {
 	delete G4AnalysisManager::Instance();
 }
 
@@ -70,6 +51,7 @@ void RunAction::EndOfRunAction(const G4Run* /*run*/)
 {
 	// print histogram statistics
 	auto analysisManager = G4AnalysisManager::Instance();
+	
 	
 	// save histograms & ntuple
 	analysisManager->Write();
