@@ -17,12 +17,13 @@ public:
 	virtual void  BeginOfEventAction(const G4Event* event);
 	virtual void    EndOfEventAction(const G4Event* event);
 	
-	void AddPid(int pid);
-	void AddKine(int pid, double kine);
+	void AddPid(int trkID, int pid);
+	void AddKine(int trkID, double kine);
 
 private:
-	std::vector<int> pids;
-	
+	// key is track id
+	std::map<int, int> pids;
+	std::map<int, double> kines;
 };
 
 #endif

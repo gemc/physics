@@ -11,14 +11,20 @@ void neutrinos_histo()
 	Double_t PDGE = 0;
 	Double_t KE = 0;
 	
-	tree->SetBranchAddress("pid", &PDGE);
-	tree->SetBranchAddress("KE",   &KE);
+	tree->SetBranchAddress("pid",  &PDGE);
+	tree->SetBranchAddress("kine", &KE);
 	
 	// Create histos
-	TH1F *v_mu1  = new TH1F("#nu_{#mu}",       "", 300, 0., 300.);
-	TH1F *v_mu2  = new TH1F("#bar{#nu}_{#mu}", "", 300, 0., 300.);
-	TH1F *v_e1   = new TH1F("#nu_{e}",         "", 300, 0., 300.);
-	TH1F *v_e2   = new TH1F("#bar{#nu}_{e}",   "", 300, 0., 300.);
+	
+	// nu_mu pdg encoding: 14
+	// anti_nu_mu pdg encoding: -14
+	// nu_e pdg encoding: 12
+	// anti_nu_e pdg encoding: -12
+		
+	TH1F *nu_mu      = new TH1F("#nu_{#mu}",       "", 300, 0., 300.);
+	TH1F *anti_nu_mu = new TH1F("#bar{#nu}_{#mu}", "", 300, 0., 300.);
+	TH1F *nu_e       = new TH1F("#nu_{e}",         "", 300, 0., 300.);
+	TH1F *anti_nu_e  = new TH1F("#bar{#nu}_{e}",   "", 300, 0., 300.);
 	
 	Int_t nentries = (Int_t)tree -> GetEntries();
 	cout << "n : "    <<  nentries  <<  endl;
@@ -27,36 +33,44 @@ void neutrinos_histo()
 		
 		tree -> GetEntry(i);
 		
-		if(PDGE==12 && KE > 5 )  {	v_e1 -> Fill(KE);     }
-		if(PDGE==-12&& KE > 6 )  { v_e2 -> Fill(KE);     }
-		if(PDGE==14)             { v_mu1 -> Fill(KE);    }
-		if(PDGE==-14)            { v_mu2 -> Fill(KE);    }
+		
+//		if (fabs(PDGE) == 12 || fabs(PDGE) == 14 ) {
+//			cout << " PDGE: " << PDGE << ", kine: " << KE << endl;
+//		}
+		
+		if(PDGE ==  12 && KE > 5 )  {	nu_e-> Fill(KE);      }
+		if(PDGE == -12 && KE > 6 )  { anti_nu_e->Fill(KE);  }
+		if(PDGE ==  14)             { nu_mu->Fill(KE);      }
+		if(PDGE == -14)             { anti_nu_mu->Fill(KE); }
 		
 	}
 	
 	TCanvas *c1  =  new TCanvas("c1", "neutrino energy");
 	c1-> SetLogy();
 	c1-> SetLineWidth(5);
-	v_mu1 -> GetXaxis()->SetTitle("Energy(MeV)");
-	v_mu1 -> SetLineColor(2);
-	v_mu1 -> Draw("hist");
-	int m1 = v_mu1->GetEntries();
-	v_mu2 -> SetLineColor(4);
-	v_mu2 -> Draw("histsame");
-	int m2 = v_mu2->GetEntries();
-	v_e1 -> SetLineColor(6);
-	v_e1 -> Draw("histsame");
-	int e1 = v_e1->GetEntries();
-	v_e2 -> SetLineColor(8);
-	v_e2 -> Draw("histsame");
-	int e2 = v_e2->GetEntries();
-	int i1 = v_mu1->Integral(26,55);
-	int i2 = v_mu2->Integral(26,55);
-	int i3 = v_e1->Integral(26,55);
-	int i4 = v_e2->Integral(26,55);
+	nu_mu -> GetXaxis()->SetTitle("Energy(MeV)");
+	nu_mu -> SetLineColor(2);
+	nu_mu -> Draw("hist");
+	anti_nu_mu -> SetLineColor(4);
+	anti_nu_mu -> Draw("histsame");
+	nu_e -> SetLineColor(6);
+	nu_e -> Draw("histsame");
+	anti_nu_e -> SetLineColor(8);
+	anti_nu_e -> Draw("histsame");
 	
 	c1->BuildLegend();
 	
+	
+	int m1 = nu_mu->GetEntries();
+	int m2 = anti_nu_mu->GetEntries();
+	int e1 = nu_e->GetEntries();
+	int e2 = anti_nu_e->GetEntries();
+	
+	int i1 = nu_mu->Integral(26,55);
+	int i2 = anti_nu_mu->Integral(26,55);
+	int i3 = nu_e->Integral(26,55);
+	int i4 = anti_nu_e->Integral(26,55);
+
 	cout << "nu_mu : "    <<  m1  <<  ",   nu_mu* : "   <<  m2 <<  ",   nu_e : " << e1  <<  ",   nu_e* : " << e2 <<  endl;
 	cout << "nu_mu(25~55MeV) : "  <<  i1 <<  ",   nu_mu*(25~55MeV) : " << i2  << ",   nu_e(25~55MeV) : "  << i3 <<",   nu_e(25~55MeV) : "   << i4 << endl;
 	

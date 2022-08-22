@@ -27,9 +27,8 @@ RunAction::RunAction() : G4UserRunAction()
 	analysisManager->CreateNtuple("pima", "pim absorbtion test");
 	analysisManager->CreateNtupleDColumn("pid");
 	analysisManager->CreateNtupleDColumn("kine");
-	analysisManager->CreateNtupleDColumn("evn");
 	analysisManager->FinishNtuple();
-		
+	
 }
 
 RunAction::~RunAction() {

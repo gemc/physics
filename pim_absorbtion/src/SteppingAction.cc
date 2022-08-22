@@ -23,15 +23,24 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
 	
 	G4LogicalVolume* volume = step->GetPreStepPoint()->GetPhysicalVolume()->GetLogicalVolume();
 
-	G4int PDGE  = step->GetTrack()->GetDefinition()->GetPDGEncoding();
-	G4double kE = step->GetTrack()-> GetKineticEnergy();
-	G4int Pid   = step->GetTrack()->GetParentID();
+	auto thisTrack = step->GetTrack();
+	
+	int trkID = thisTrack->GetTrackID();
+	int PDGE  = thisTrack->GetDefinition()->GetPDGEncoding();
+	double KE = thisTrack->GetKineticEnergy();
+	int mpid  = thisTrack->GetParentID();
 
 	if (volume != fScoringVolume) return;
-	
-	if (Pid != 0) {
-		fEventAction->AddPid(PDGE);
-		fEventAction->AddKine(PDGE, KE);
+
+
+	if (mpid != 0) {
+
+//		if (fabs(PDGE) == 12 || fabs(PDGE) == 14 ) {
+//			std::cout << "SSS trackID: " << trkID << ", PDGE: " << PDGE << ", kine: " << KE << std::endl;
+//		}
+
+		fEventAction->AddPid(trkID, PDGE);
+		fEventAction->AddKine(trkID, KE);
 	}
 	
 }
