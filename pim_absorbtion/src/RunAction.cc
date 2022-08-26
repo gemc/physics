@@ -8,10 +8,7 @@
 
 
 RunAction::RunAction() : G4UserRunAction()
-{ 
-	// set printing event number per each event
-	G4RunManager::GetRunManager()->SetPrintProgress(1000);
-	
+{ 	
 	// Create analysis manager
 	// The choice of analysis technology is done via selectin of a namespace in Analysis.hh
 	auto analysisManager = G4AnalysisManager::Instance();

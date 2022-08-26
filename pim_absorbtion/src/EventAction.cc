@@ -20,11 +20,7 @@ void EventAction::BeginOfEventAction(const G4Event* event) {
 
 void EventAction::EndOfEventAction(const G4Event* event)
 {
-	int evn = event->GetEventID();
-	
-	// Print per event (modulo n)
-	auto printModulo = G4RunManager::GetRunManager()->GetPrintProgress();
-	
+		
 	auto analysisManager = G4AnalysisManager::Instance();
 	
 	for ( auto pidsMapIndex : pids ) {
@@ -42,7 +38,6 @@ void EventAction::EndOfEventAction(const G4Event* event)
 		analysisManager->AddNtupleRow();
 
 	}
-	
 	
 }  
 
