@@ -19,19 +19,24 @@ If pi- is absorbed in Al, as we expect, the electrons anti-neutrino νe* are sup
 
 The test counts the various neutrinos.
 
-
-** Compilation
-
-	With 4 cores (modify accordingly)
-
-   - cmake .
-   - make -j4
-
-
 ** Geometry
 
 A G4_Galactive tube encompass a beam dump made of aluminum.
 In the stepping action calls to event action fill the ntuple when the step is in the scoring tube.
+
+
+** Compilation
+
+	With 4 cores (modify accordingly):
+
+   - cmake .
+   - make -j4
+
+** Run :
+
+Batch mode:
+
+pim_absorbtion -m run.mac
 
 
 ** ROOT Analysis:
