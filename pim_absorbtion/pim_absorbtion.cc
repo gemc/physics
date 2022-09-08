@@ -1,10 +1,13 @@
+// pim absorbtion
 #include "PhysicsList.hh"
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
 
+// physics
+#include "extPhysics.hh"
+
 // geant4 physics
 #include "G4PhysListFactory.hh"
-#include "QGSP_BERT_HP.hh"
 
 // geant4
 #include "G4MTRunManager.hh"
@@ -16,34 +19,62 @@
 #include "G4VisExecutive.hh"
 #include "G4ChargeExchangePhysics.hh"
 
+using namespace std;
+
 namespace {
 
 void PrintUsage() {
+	G4cerr << G4endl;
 	G4cerr << " Usage: " << G4endl;
-	G4cerr << " pim_absorbtion [-m macro ] [-u UIsession] [-t nThreads]" << G4endl;
-	G4cerr << "   note: -t option is available only for multi-threaded mode." << G4endl;
+	G4cerr << G4endl;
+	G4cerr << "  pim_absorbtion [-m macro ] [-u UIsession] [-t nThreads] [-p physList ]  [-v | --verbose ] [-h | --help] [ -pap | --printAvailablePnysics ]" << G4endl;
+	G4cerr << G4endl;
+	G4cerr << " The default physList is FTFP_BERT. " << G4endl;
+	G4cerr << " It can be replaced by any of the available physics modules and compounded with additional physics constructors. " << G4endl;
+	G4cerr << " For example: " << G4endl;
+	G4cerr << G4endl;
+	G4cerr << "  -p FTFP_BERT_EMX  would replace the standard e.m. physics with G4EmStandardPhysics_option3" << G4endl;
+	G4cerr << "  -p QGSP_BERT+G4OpticalPhysics would use QGSP_BERT and G4OpticalPhysics" << G4endl;
+	G4cerr << "  -p QGSP_FTFP_BERT+G4RadioactiveDecayPhysics+G4OpticalPhysics would use QGSP_FTFP_BERT, G4RadioactiveDecayPhysics and G4OpticalPhysics" << G4endl;
+	G4cerr << G4endl;
+	G4cerr << " To print all geant4 available physics modules and constructors use the -pap option " << G4endl;
+
 }
 }
 
 
 int main(int argc,char** argv)
 {
-	// Evaluate arguments
-	if ( argc > 7 ) {
-		PrintUsage();
-		return 1;
-	}
-	
 	G4String macro;
 	G4String session;
-	G4int nThreads = 4;
-	
+	G4int    nThreads = 4;
+	G4int    verbosity = 0;
+
+	string physListString = "FTFP_BERT";
+	bool   printAvailablePhysics = false;
+
+
 	for ( G4int i=1; i<argc; i=i+2 ) {
-		if      ( G4String(argv[i]) == "-m" ) macro   = argv[i+1];
-		else if ( G4String(argv[i]) == "-u" ) session = argv[i+1];
-		else if ( G4String(argv[i]) == "-t" ) {
+		G4String g4argv(argv[i]);
+		if      ( g4argv == "-m" ) macro          = argv[i+1];
+		else if ( g4argv == "-u" ) session        = argv[i+1];
+		else if ( g4argv == "-p" ) physListString = argv[i+1];
+		else if ( g4argv == "-t" ) {
 			nThreads = G4UIcommand::ConvertToInt(argv[i+1]);
-		} else {
+		}
+		else if ( g4argv == "-v" || g4argv == "--verbose" ) {
+			++verbosity;  // verbose flag doesn't take an argument
+			--i ;         // don't increment argc by two, just the one
+		}
+		else if ( g4argv == "-pap" || g4argv == "--printAvailablePnysics" ) {
+			printAvailablePhysics = true;
+			--i ;         // don't increment argc by two, just the one
+		}
+		else if ( g4argv == "-h" || g4argv == "--help" ) {
+			PrintUsage();
+			return 1;
+		}
+		else {
 			PrintUsage();
 			return 1;
 		}
@@ -68,8 +99,9 @@ int main(int argc,char** argv)
 	auto detConstruction = new DetectorConstruction();
 	runManager->SetUserInitialization(detConstruction);
 	
-	auto physicsList = new QGSP_BERT_HP;
-	runManager->SetUserInitialization( physicsList);
+	auto gphysics = new GPhysics(printAvailablePhysics, physListString);
+	runManager->SetUserInitialization(gphysics->getPhysList());
+
 	
 	auto actionInitialization = new ActionInitialization(detConstruction);
 	runManager->SetUserInitialization(actionInitialization);

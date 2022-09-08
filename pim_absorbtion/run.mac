@@ -2,5 +2,5 @@
 #
 # Run Default kinemtics, print log every n events
 /run/printProgress 100
-/run/beamOn 1000
+/run/beamOn 300
 
