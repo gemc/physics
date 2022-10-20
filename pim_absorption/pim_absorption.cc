@@ -10,10 +10,11 @@
 #include "G4PhysListFactory.hh"
 
 // geant4
-#include "G4MTRunManager.hh"
+#include "G4RunManagerFactory.hh"
+#include "G4SteppingVerbose.hh"
 #include "G4UIExecutive.hh"
-#include "G4UImanager.hh"
 #include "G4UIcommand.hh"
+#include "G4UImanager.hh"
 #include "G4StepLimiterPhysics.hh"
 #include "Randomize.hh"
 #include "G4VisExecutive.hh"
@@ -27,7 +28,7 @@ void PrintUsage() {
 	G4cerr << G4endl;
 	G4cerr << " Usage: " << G4endl;
 	G4cerr << G4endl;
-	G4cerr << "  pim_absorbtion [-m macro ] [-u UIsession] [-t nThreads] [-p physList ]  [-v | --verbose ] [-h | --help] [ -pap | --printAvailablePnysics ]" << G4endl;
+	G4cerr << "  pim_absorption [-m macro ] [-u UIsession] [-t nThreads] [-p physList ]  [-v | --verbose ] [-h | --help] [ -pap | --printAvailablePnysics ]" << G4endl;
 	G4cerr << G4endl;
 	G4cerr << " The default physList is FTFP_BERT. " << G4endl;
 	G4cerr << " It can be replaced by any of the available physics modules and compounded with additional physics constructors. " << G4endl;
@@ -49,6 +50,7 @@ int main(int argc,char** argv)
 	G4String session;
 	G4int    nThreads = 4;
 	G4int    verbosity = 0;
+	G4bool   verboseBestUnits = true;
 
 	string physListString = "FTFP_BERT";
 	bool   printAvailablePhysics = false;
@@ -70,6 +72,10 @@ int main(int argc,char** argv)
 			printAvailablePhysics = true;
 			--i ;         // don't increment argc by two, just the one
 		}
+		else if ( G4String(argv[i]) == "-vDefault" ) {
+			verboseBestUnits = false;
+			--i;  // this option is not followed with a parameter
+		}
 		else if ( g4argv == "-h" || g4argv == "--help" ) {
 			PrintUsage();
 			return 1;
@@ -86,28 +92,35 @@ int main(int argc,char** argv)
 		ui = new G4UIExecutive(argc, argv, session);
 	}
 	
-	// Choose the Random engine
-	G4Random::setTheEngine(new CLHEP::RanecuEngine);
-	
+	// Optionally: choose a different Random engine...
+	// G4Random::setTheEngine(new CLHEP::RanecuEngine);
+
+	// Use G4SteppingVerboseWithUnits
+	if ( verboseBestUnits ) {
+		G4int precision = 8;
+		G4SteppingVerbose::UseBestUnit(precision);
+	}
+
 	// Construct the default run manager
-	auto runManager = new G4MTRunManager;
+	auto runManager =     G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
 	if ( nThreads > 0 ) {
 		runManager->SetNumberOfThreads(nThreads);
 	}
 	
 	// Set mandatory initialization classes
-	auto detConstruction = new DetectorConstruction();
+	auto detConstruction = new pim_absorption::DetectorConstruction();
 	runManager->SetUserInitialization(detConstruction);
 	
 	auto gphysics = new GPhysics(printAvailablePhysics, physListString);
 	runManager->SetUserInitialization(gphysics->getPhysList());
 
-	
-	auto actionInitialization = new ActionInitialization(detConstruction);
+	auto actionInitialization = new pim_absorption::ActionInitialization(detConstruction);
 	runManager->SetUserInitialization(actionInitialization);
 	
 	// Initialize visualization
 	auto visManager = new G4VisExecutive;
+	// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
+	// G4VisManager* visManager = new G4VisExecutive("Quiet");
 	visManager->Initialize();
 	
 	// Get the pointer to the User Interface manager

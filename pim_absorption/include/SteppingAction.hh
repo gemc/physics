@@ -3,25 +3,27 @@
 
 #include "G4UserSteppingAction.hh"
 
+class G4LogicalVolume;
+
+namespace pim_absorption {
+
 class DetectorConstruction;
 class EventAction;
-
-class G4LogicalVolume;
 
 class SteppingAction : public G4UserSteppingAction
 {
 public:
 	SteppingAction(const DetectorConstruction* detectorConstruction,
 						EventAction* eventAction);
-	virtual ~SteppingAction();
-	
-	virtual void UserSteppingAction(const G4Step* step);
-	
+	virtual ~SteppingAction() override;
+
+	virtual void UserSteppingAction(const G4Step* step) override;
+
 private:
-	const DetectorConstruction* fDetConstruction;
+	const DetectorConstruction* fDetConstruction = nullptr;;
 	EventAction*  fEventAction;
-	G4LogicalVolume* fScoringVolume;
-	
+
 };
 
+}
 #endif
