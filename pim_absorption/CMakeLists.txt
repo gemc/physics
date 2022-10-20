@@ -2,7 +2,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16...3.21)
 project(pim_absorbtion)
 
 #----------------------------------------------------------------------------
@@ -34,8 +34,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../in
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(pim_absorbtion pim_absorbtion.cc ${sources} ${headers})
-target_link_libraries(pim_absorbtion ${Geant4_LIBRARIES})
+add_executable(pim_absorption pim_absorption.cc ${sources} ${headers})
+target_link_libraries(pim_absorption $pGeant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -59,4 +59,4 @@ endforeach()
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS pim_absorbtion DESTINATION bin)
+install(TARGETS pim_absorption DESTINATION bin)

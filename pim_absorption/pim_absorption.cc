@@ -27,7 +27,7 @@ void PrintUsage() {
 	G4cerr << G4endl;
 	G4cerr << " Usage: " << G4endl;
 	G4cerr << G4endl;
-	G4cerr << "  pim_absorbtion [-m macro ] [-u UIsession] [-t nThreads] [-p physList ]  [-v | --verbose ] [-h | --help] [ -pap | --printAvailablePnysics ]" << G4endl;
+	G4cerr << "  pim_absorption [-m macro ] [-u UIsession] [-t nThreads] [-p physList ]  [-v | --verbose ] [-h | --help] [ -pap | --printAvailablePnysics ]" << G4endl;
 	G4cerr << G4endl;
 	G4cerr << " The default physList is FTFP_BERT. " << G4endl;
 	G4cerr << " It can be replaced by any of the available physics modules and compounded with additional physics constructors. " << G4endl;
