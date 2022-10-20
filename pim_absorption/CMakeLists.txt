@@ -35,7 +35,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../in
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(pim_absorption pim_absorption.cc ${sources} ${headers})
-target_link_libraries(pim_absorption $pGeant4_LIBRARIES})
+target_link_libraries(pim_absorption ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we

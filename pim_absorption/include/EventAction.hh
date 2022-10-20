@@ -8,24 +8,28 @@
 // geant4
 #include "G4UserEventAction.hh"
 
-class EventAction : public G4UserEventAction
-{
-public:
-	EventAction();
-	virtual ~EventAction();
-	
-	virtual void  BeginOfEventAction(const G4Event* event);
-	virtual void    EndOfEventAction(const G4Event* event);
-	
-	void AddPid(int trkID, int pid);
-	void AddKine(int trkID, double kine);
+namespace pim_absorption {
 
-private:
-	// key is track id
-	std::map<int, int> pids;
-	std::map<int, double> kines;
-};
+    class EventAction : public G4UserEventAction {
+    public:
+        EventAction();
 
+        virtual ~EventAction();
+
+        virtual void BeginOfEventAction(const G4Event *event);
+
+        virtual void EndOfEventAction(const G4Event *event);
+
+        void AddPid(int trkID, int pid);
+
+        void AddKine(int trkID, double kine);
+
+    private:
+        // key is track id
+        std::map<int, int> pids;
+        std::map<int, double> kines;
+    };
+}
 #endif
 
 

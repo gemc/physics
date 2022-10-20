@@ -5,23 +5,30 @@
 #include "G4VUserDetectorConstruction.hh"
 
 class G4VPhysicalVolume;
-class G4LogicalVolume;
 
-namespace pim_absorbtion {
+namespace pim_absorption {
 
-	class DetectorConstruction : public G4VUserDetectorConstruction
-	{
-	public:
-		DetectorConstruction();
-		virtual ~DetectorConstruction();
+    class DetectorConstruction : public G4VUserDetectorConstruction {
 
-		virtual G4VPhysicalVolume* Construct();
+    public:
+        DetectorConstruction();
+        virtual ~DetectorConstruction() override;
 
-		G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
+    public:
+        virtual G4VPhysicalVolume *Construct() override;
 
-	protected:
-		G4LogicalVolume*  fScoringVolume;
-	};
+    public:
+        inline const G4VPhysicalVolume* getVacuumDetectorPV() const { return vacuumDetectorPV; }
+
+
+    private:
+        G4VPhysicalVolume* vacuumDetectorPV = nullptr; // the scoring volume
+
+
+
+
+    };
+
 
 }
 

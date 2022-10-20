@@ -11,6 +11,7 @@
 
 // geant4
 #include "G4RunManagerFactory.hh"
+#include "G4SteppingVerbose.hh"
 #include "G4UIExecutive.hh"
 #include "G4UIcommand.hh"
 #include "G4UImanager.hh"
@@ -107,13 +108,13 @@ int main(int argc,char** argv)
 	}
 	
 	// Set mandatory initialization classes
-	auto detConstruction = new DetectorConstruction();
+	auto detConstruction = new pim_absorption::DetectorConstruction();
 	runManager->SetUserInitialization(detConstruction);
 	
 	auto gphysics = new GPhysics(printAvailablePhysics, physListString);
 	runManager->SetUserInitialization(gphysics->getPhysList());
 
-	auto actionInitialization = new ActionInitialization(detConstruction);
+	auto actionInitialization = new pim_absorption::ActionInitialization(detConstruction);
 	runManager->SetUserInitialization(actionInitialization);
 	
 	// Initialize visualization
