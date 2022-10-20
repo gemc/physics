@@ -56,7 +56,24 @@ foreach(_script ${FILES_TO_COPY})
     )
 endforeach()
 
+# for some reason this is not added to the cflags
+# but in the examples it it. Investigate more.
+set(G4CONFIG "$ENV{G4INSTALL}/bin/geant4-config")
+execute_process (
+    COMMAND ${G4CONFIG} --cflags
+    OUTPUT_VARIABLE G4CFLAGS
+)
+string(STRIP ${G4CFLAGS} G4CFLAGS)
+set(CMAKE_CXX_FLAGS " ${G4CFLAGS} ${CMAKE_CXX_FLAGS}")
+
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
+message(STATUS "")
+message(STATUS "CMAKE_BUILD_TYPE: " ${CMAKE_BUILD_TYPE})
+message(STATUS "CMAKE_CXX_FLAGS: "  ${CMAKE_CXX_FLAGS})
+message(STATUS "C++ compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+message(STATUS "")
+
+
 install(TARGETS pim_absorption DESTINATION bin)

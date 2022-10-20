@@ -23,6 +23,8 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
 	
 	G4LogicalVolume* volume = step->GetPreStepPoint()->GetPhysicalVolume()->GetLogicalVolume();
 
+	if (volume != fScoringVolume) return;
+
 	auto thisTrack = step->GetTrack();
 	
 	int trkID = thisTrack->GetTrackID();
@@ -30,7 +32,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
 	double KE = thisTrack->GetKineticEnergy();
 	int mpid  = thisTrack->GetParentID();
 
-	if (volume != fScoringVolume) return;
 
 
 	if (mpid != 0) {

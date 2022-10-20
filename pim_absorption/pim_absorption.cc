@@ -1,4 +1,4 @@
-=// pim absorbtion
+// pim absorbtion
 #include "PhysicsList.hh"
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
