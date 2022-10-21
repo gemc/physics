@@ -20,7 +20,7 @@ public:
 	virtual void UserSteppingAction(const G4Step* step) override;
 
 private:
-	const DetectorConstruction* fDetConstruction = nullptr;;
+	const DetectorConstruction* fDetConstruction = nullptr;
 	EventAction*  fEventAction;
 
 };
