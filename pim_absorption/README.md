@@ -54,7 +54,7 @@ To print all geant4 available physics modules and constructors use the -pap opti
 
 ### - Batch mode:
 
-`pim_absorbtion -m run.mac`
+`./pim_absorption -m run.mac`
 
 ## ROOT Analysis:
 

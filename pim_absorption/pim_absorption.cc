@@ -25,6 +25,7 @@ using namespace std;
 namespace {
 
 void PrintUsage() {
+	
 	G4cerr << G4endl;
 	G4cerr << " Usage: " << G4endl;
 	G4cerr << G4endl;
@@ -39,8 +40,8 @@ void PrintUsage() {
 	G4cerr << "  -p QGSP_FTFP_BERT+G4RadioactiveDecayPhysics+G4OpticalPhysics would use QGSP_FTFP_BERT, G4RadioactiveDecayPhysics and G4OpticalPhysics" << G4endl;
 	G4cerr << G4endl;
 	G4cerr << " To print all geant4 available physics modules and constructors use the -pap option " << G4endl;
-
 }
+
 }
 
 
@@ -102,7 +103,7 @@ int main(int argc,char** argv)
 	}
 
 	// Construct the default run manager
-	auto runManager =     G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
+	auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
 	if ( nThreads > 0 ) {
 		runManager->SetNumberOfThreads(nThreads);
 	}
@@ -138,7 +139,7 @@ int main(int argc,char** argv)
 		ui->SessionStart();
 		delete ui;
 	}
-	
+		
 	delete visManager;
 	delete runManager;
 }
