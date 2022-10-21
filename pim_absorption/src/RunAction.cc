@@ -30,7 +30,6 @@ namespace pim_absorption {
     }
 
     RunAction::~RunAction() {
-        delete G4AnalysisManager::Instance();
     }
 
     void RunAction::BeginOfRunAction(const G4Run * /*run*/) {
@@ -38,7 +37,7 @@ namespace pim_absorption {
         auto analysisManager = G4AnalysisManager::Instance();
 
         // Open an output file
-        G4String fileName = "pima";               // file opening command moved to the class constructor
+        G4String fileName = "pima.root";               // file opening command moved to the class constructor
         analysisManager->OpenFile(fileName);
     }
 
