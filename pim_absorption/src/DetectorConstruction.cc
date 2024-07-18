@@ -10,7 +10,7 @@
 
 namespace pim_absorption {
 
-    DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction(){}
+    DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
 
     DetectorConstruction::~DetectorConstruction() {}
 
@@ -54,18 +54,18 @@ namespace pim_absorption {
                                     "vacuumDetectorLogical");      // name
 
         vacuumDetectorPV = new G4PVPlacement(0,                       // no rotation
-                          G4ThreeVector(),         // at (0,0,0)
-                          vacuumDetectorLogical,   // logical volume
-                          "vacuumDetector",        // name
-                          logicWorld,              // mother  volume
-                          false,                   // no boolean operation
-                          0,                       // copy number
-                          true);                   // overlaps checking
+                                             G4ThreeVector(),         // at (0,0,0)
+                                             vacuumDetectorLogical,   // logical volume
+                                             "vacuumDetector",        // name
+                                             logicWorld,              // mother  volume
+                                             false,                   // no boolean operation
+                                             0,                       // copy number
+                                             true);                   // overlaps checking
 
 
         G4Tubs *beamDumpSolid =
-                new G4Tubs("beamDumpSolid",                             // name
-                           0 * cm, 50 * cm, 200 * cm, 0 * deg, 360 * deg);        // size
+                new G4Tubs("beamDumpSolid",                                  // name
+                           0 * cm, 50 * cm, 200 * cm, 0 * deg, 360 * deg);   // size
 
         G4LogicalVolume *beamDumpLogical =
                 new G4LogicalVolume(beamDumpSolid,        // solid
